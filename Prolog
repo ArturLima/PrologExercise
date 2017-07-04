@@ -1,0 +1,107 @@
+%-> Verificar se um elemento existe em uma lista;
+ 
+ existe([X|H], E):-
+    E = X ;
+        existe(H,E).
+ 
+%-> Concatenar duas listas;
+ 
+    conc([],L,L).
+    conc([X|H1], L2, [X|H2]):-
+        conc(H1,L2,H2).
+ 
+%-> Adicionar um elemento na ultima posição da Lista;
+ 
+    addUltimo(X,[],[X]).
+        addUltimo(X, [H|T],[H|T1]):-
+            addUltimo(X,T,T1).
+ 
+%-> Eliminar uma elemento de uma lista;
+ 
+    eliminar(_,[_|Y],Y).
+        eliminar(X,[Y|T],[Y|T1]):-
+            eliminar(X,T,T1).
+ 
+ 
+%Crie um procedimento em Prolog para contar
+%o número de elementos de uma Lista.
+ 
+    contar([],0).
+    contar([_|Y],R):-
+        contar(Y,S), R is S+1.
+ 
+%Crie um procedimento em Prolog para
+%eliminar os três primeiros elementos de uma
+%Lista.
+    remover3primeiros([_, _, _|H], H).
+%Crie uma função em Prolog para imprimir o
+%último elemento de uma Lista.
+    ultimo([H],U):-
+    H=U.
+    ultimo([_|T],U):-
+        ultimo(T,U).
+ 
+%Crie um procedimento em Prolog para apagar
+%o último elemento de uma lista
+    deletarUltimo([_],[]).
+    deletarUltimo([H|T],[H|T1]):-
+        deletarUltimo(T,T1).
+ 
+concatenar([], L, L).
+concatenar([H|T], L, [H|D]) :- concatenar(T, L, D).
+inverte([], []).
+inverte([H|T], L) :- inverte(T, X), concatenar(X, [H], L). %certo
+ 
+ 
+ 
+reverse_(L,R) :- revacc_(L,[],R). %outro Certo
+revacc_([],L,L).
+revacc_([H|T],L,R) :-
+    revacc_(T,[H|L],R).
+	
+ 
+%retornar todos menos o ultimo da lista
+	menosUltimo([_],[]).
+	 menosUltimo([H|T1],[H|T2]):-
+    	menosUltimo(T1,T2).
+ 
+ 
+%Acrescentar um elemento na lista se ele já não estiver nela
+ 
+	acres(X,[],[X]).
+	acres(X,[X|T1],[X|T1]):- !.
+	acres(X,[H|T1],[H|R]):-
+    acres(X,T1,R).
+ 
+ 
+%retornar n-ésimo numero de uma lista
+dec(X,X1):-
+    X1 is X-1.
+	enesimo([H|_],P,H):-
+		P=0.
+	enesimo([_|T],P,R):-
+		dec(P,P2),
+    enesimo(T,P2,R).
+ 
+%retornar o menor da lista
+ 
+	menor([X],X).
+	 menor([X|Y],M):-
+    	menor(Y,N),
+    		(X < N ->  M=X;M=N).
+ 
+%existe na lista aquele elemento
+	existe([X|H],E):-
+    	E = X;
+    		existe(H,E).
+ 
+%Acrescentar elemento na lista se nao tiver.
+ 
+ 
+ 
+%Deletar todas as ocorrencias de uma lista
+del(_,[],[]).
+del(X,[X|C],Y) :-
+del(X,C,C1), C1 = Y.
+del(X,[Y|C],[Y|C1]):-
+del(X,C,C1).
